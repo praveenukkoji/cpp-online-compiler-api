@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,10 +26,30 @@ SECRET_KEY = 'w(_m9#%dzbg$b-^2j_&ep#kz2jf4=tv!^y#97cdwf+szklw*r^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '*']
+ALLOWED_HOSTS = ['http://cpp-online-compiler.herokuapp.com']
 
-CORS_ORIGIN_ALLOW_ALL = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+# If this is used then 'CORS_ORIGIN_WHITELIST' will not have any effect
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = False
+
+# If this is used then not need to use 'CORS_ORIGIN_ALLOW_ALL = True'
+
+UI_URL = 'http://cpp-onilen-compiler.herokuapp.com'
+CORS_ORIGIN_WHITELIST = [UI_URL]
+CORS_ORIGIN_REGEX_WHITELIST = [UI_URL]
+
+CORS_ALLOWED_ORIGINS = [UI_URL]
+CORS_ALLOW_METHODS = ['GET', 'OPTIONS', 'POST']
+CORS_ALLOW_HEADERS = ['accept', 'accept-encoding', 'authorization', 'content-type', 'dnt', 'origin', 'user-agent',
+                      'x-crsftoken', 'x-requested-with']
+
+# 20 minutes
+CORS_PREFLIGHT_MAX_AGE = 1200
 
 # Application definition
 
@@ -45,14 +66,14 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 ROOT_URLCONF = 'onlinecompiler.urls'
@@ -121,6 +142,19 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+os.makedirs(STATIC_TMP, exist_ok=True)
+os.makedirs(STATIC_ROOT, exist_ok=True)
+
+
+
+django_heroku.settings(locals())
