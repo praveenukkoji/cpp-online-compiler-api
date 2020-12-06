@@ -26,7 +26,7 @@ SECRET_KEY = 'w(_m9#%dzbg$b-^2j_&ep#kz2jf4=tv!^y#97cdwf+szklw*r^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://cpp-online-compiler.herokuapp.com']
+ALLOWED_HOSTS = ['https://cpp-online-compiler.herokuapp.com']
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -39,7 +39,7 @@ CORS_ALLOW_CREDENTIALS = False
 
 # If this is used then not need to use 'CORS_ORIGIN_ALLOW_ALL = True'
 
-UI_URL = 'http://cpp-online-compiler.herokuapp.com'
+UI_URL = 'https://cpp-online-compiler.herokuapp.com'
 CORS_ORIGIN_WHITELIST = [UI_URL]
 CORS_ORIGIN_REGEX_WHITELIST = [UI_URL]
 
